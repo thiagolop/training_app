@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:training_app/app/pages/home/modulo.dart';
 
 class HomeController {
-  List<Exercises> exercisesList = [];
+  List<ExercisesPictures> exercisesList = [];
 
   Future<String> getJson() {
     return rootBundle.loadString('json/info.json');
@@ -12,7 +12,7 @@ class HomeController {
   getExercises() async {
     String json = await getJson();
     final result = jsonDecode(json);
-    final List<Exercises> exercisesList = (result as List).map((e) => Exercises.fromJson(e)).toList();
+    final List<ExercisesPictures> exercisesList = (result as List).map((e) => ExercisesPictures.fromJson(e)).toList();
     return exercisesList;
   }
 }

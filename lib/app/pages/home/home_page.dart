@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomeController homeController = HomeController();
-  List<Exercises> exercisesList = [];
+  List<ExercisesPictures> exercisesList = [];
 
   @override
   void initState() {

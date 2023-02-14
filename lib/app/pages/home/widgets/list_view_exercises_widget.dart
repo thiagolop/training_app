@@ -4,7 +4,7 @@ import '../modulo.dart';
 
 class ListViewExercisesWidget extends StatelessWidget {
   final int itemCount;
-  final List<Exercises> exercisesList;
+  final List<ExercisesPictures> exercisesList;
 
   const ListViewExercisesWidget({
     Key? key,

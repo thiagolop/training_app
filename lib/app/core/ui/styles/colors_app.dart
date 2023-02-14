@@ -19,5 +19,5 @@ class ColorsApp {
   static Color secondPageIconColor = const Color(0xFFfafafe);
   static Color loopColor = const Color(0xFF6d8dea);
   static Color sersColor = const Color(0xFF9999a9);
-  static Color circuitsColor = const Color(0xFFe6e6e6);
+  static Color circuitsColor = const Color(0xFF181818);
 }
