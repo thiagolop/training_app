@@ -6,7 +6,7 @@ class DetailsController {
   List<DetailsModel> detailsList = [];
 
   Future<String> getJson() {
-    return rootBundle.loadString('json/info.json');
+    return rootBundle.loadString('json/vidioinfo.json');
   }
 
   getDetails() async {

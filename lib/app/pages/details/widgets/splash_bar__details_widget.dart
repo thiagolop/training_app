@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import '../../../core/ui/styles/colors_app.dart' as color;
 
 class SplashBarDetailsWidget extends StatelessWidget {
-  const SplashBarDetailsWidget({super.key});
+  const SplashBarDetailsWidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pod_player/pod_player.dart';
+import 'package:training_app/app/pages/details/widgets/video_widget.dart';
+import 'package:training_app/app/pages/details/widgets/body_details.dart';
 import 'package:training_app/app/pages/details/widgets/details_model.dart';
 import 'package:training_app/app/pages/details/widgets/splash_bar__details_widget.dart';
 import '../../core/ui/styles/colors_app.dart' as color;
@@ -13,17 +16,37 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   DetailsController detailsController = DetailsController();
-  List<DetailsModel> detailsList = [];
+  PodPlayerController? videoPlayercontroller;
+  String urlVideo = '';
+  List<DetailsModel> detailsListVidios = [];
 
   @override
   void initState() {
     super.initState();
-    _init();
+    _initVidios();
   }
 
-  _init() async {
-    detailsList = await detailsController.getDetails();
+  _playPauseVideo(String video) {
+    if (urlVideo == video) {
+      videoPlayercontroller!.videoPlayerValue!.isPlaying ? videoPlayercontroller!.pause() : videoPlayercontroller!.play();
+    } else {
+      videoPlayercontroller?.dispose();
+      videoPlayercontroller = PodPlayerController(
+        playVideoFrom: PlayVideoFrom.youtube(video),
+      )..initialise();
+      urlVideo = video;
+    }
+  }
+
+  _initVidios() async {
+    detailsListVidios = await detailsController.getDetails();
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    videoPlayercontroller?.dispose();
   }
 
   @override
@@ -36,39 +59,27 @@ class _DetailsPageState extends State<DetailsPage> {
               color.ColorsApp.gradientFrist,
               color.ColorsApp.gradientSecond,
             ],
-            begin: const FractionalOffset(0.0, 0.4),
+            begin: const FractionalOffset(0.0, 0.7),
             end: Alignment.topRight,
           ),
         ),
         child: Column(
           children: [
-            const SplashBarDetailsWidget(),
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(90),
-                  ),
-                ),
-                child: Column(children: [
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text('Circuit 1: Legs Toning', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: color.ColorsApp.circuitsColor)),
-                      Row(
-                        children: [
-                          const SizedBox(width: 10),
-                          Icon(Icons.loop, color: color.ColorsApp.loopColor, size: 25),
-                          const SizedBox(width: 5),
-                          Text('3 sets', style: TextStyle(fontSize: 18, color: color.ColorsApp.sersColor)),
-                        ],
-                      ),
-                    ],
+            urlVideo.isNotEmpty
+                ? Expanded(
+                    child: VideoWidget(controller: videoPlayercontroller!),
                   )
-                ]),
-              ),
+                : const SplashBarDetailsWidget(),
+            BodyDetails(
+              itemCount: detailsListVidios.length,
+              vidioList: detailsListVidios,
+              onTap: (String video) {
+                setState(
+                  () {
+                    _playPauseVideo(video);
+                  },
+                );
+              },
             ),
           ],
         ),
