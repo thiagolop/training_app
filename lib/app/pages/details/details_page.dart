@@ -23,24 +23,30 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     super.initState();
-    _initVidios();
+    _initList();
   }
 
   _playPauseVideo(String video) {
     if (urlVideo == video) {
       videoPlayercontroller!.videoPlayerValue!.isPlaying ? videoPlayercontroller!.pause() : videoPlayercontroller!.play();
     } else {
+      urlVideo = video;
+      _initVideo(video);
+    }
+  }
+
+  _initList() async {
+    detailsListVidios = await detailsController.getDetails();
+    setState(() {});
+  }
+
+  _initVideo(String video) async {
+    setState(() {
       videoPlayercontroller?.dispose();
       videoPlayercontroller = PodPlayerController(
         playVideoFrom: PlayVideoFrom.youtube(video),
       )..initialise();
-      urlVideo = video;
-    }
-  }
-
-  _initVidios() async {
-    detailsListVidios = await detailsController.getDetails();
-    setState(() {});
+    });
   }
 
   @override

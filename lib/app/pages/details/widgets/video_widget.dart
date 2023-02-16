@@ -36,10 +36,22 @@ class _VideoWidgetState extends State<VideoWidget> {
             ],
           ),
         ),
-        SizedBox(
-          height: 250,
-          width: 300,
-          child: PodVideoPlayer(controller: widget.controller),
+        Flexible(
+          child: Container(
+            decoration: BoxDecoration(
+              color: color.ColorsApp.secondPageTopIconColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 2,
+                  offset: const Offset(0, 3),
+                ),]
+            ),
+            height: 215,
+            width: 380,
+            child: PodVideoPlayer(controller: widget.controller, alwaysShowProgressBar: true),
+          ),
         ),
       ],
     );
